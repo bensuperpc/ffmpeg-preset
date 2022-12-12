@@ -1,0 +1,24 @@
+{
+    "type": "ffmpeg",
+    "lib": "ffmpeg",
+    "date": "2022-12-11",
+    "version": 1,
+    "details": {},
+    "input":
+    {
+        "hwaccel": "auto"
+    },
+    "output":
+    {
+        "c:v": "libvpx-vp9",
+        "threads": "0",
+        "row-mt": "1",
+        "b:v": "1000k",
+        "maxrate": "4000k",
+        "bufsize": "8000k",
+        "quality": "good",
+        "c:a": "libopus",
+        "b:a": "128k",
+        "f": "webm"
+    }
+}

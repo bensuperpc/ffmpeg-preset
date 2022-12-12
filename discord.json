@@ -1,0 +1,23 @@
+{
+    "type": "ffmpeg",
+    "lib": "ffmpeg",
+    "date": "2022-12-11",
+    "version": 1,
+    "details": {},
+    "input":
+    {
+        "hwaccel": "auto"
+    },
+    "output":
+    {
+        "c:v": "libx264",
+        "threads": "0",
+        "b:v": "1000k",
+        "maxrate": "4000k",
+        "bufsize": "8000k",
+        "preset": "veryfast",
+        "c:a": "aac",
+        "b:a": "128k",
+        "f": "mp4"
+    }
+}
