@@ -9,7 +9,7 @@ from loguru import logger
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", help="Input file", default="Mariokart_Meme_Mukbang.mp4")
-    parser.add_argument("--output", help="Output file" , default="Mariokart_Meme_Mukbang.webm")
+    parser.add_argument("--output", help="Output file" , default="Mariokart_Meme_Mukbang_enc_slow.mp4")
     parser.add_argument("--preset", help="Preset file", default="youtube.json")
     parser.add_argument("--one_pass", help="Use 2 pass encoding", action="store_true")
     parser.add_argument("--verbose", help="Verbose output", action="store_true")
@@ -28,15 +28,20 @@ def main():
 
     if args.one_pass:
         # Only one pass
+        logger.debug(f"Command: {ffmpeg.input(args.input, **input_args).output(args.output, **output_args).compile()}")
         ffmpeg.input(args.input, **input_args).output(args.output, **output_args).run(overwrite_output=True, quiet=args.verbose)
     else:
         # First pass
         output_args["pass"] = 1
-        output_args["f"] = "null"
-        ffmpeg.input(args.input, **input_args).output("pipe:", **output_args).run(overwrite_output=True, quiet=args.verbose)
+
+        logger.debug(f"Command: {ffmpeg.input(args.input, **input_args).output('/dev/null', **output_args).compile()}")
+        ffmpeg.input(args.input, **input_args).output("/dev/null", **output_args).run(overwrite_output=True, quiet=args.verbose)
+
         # Second pass
         output_args["pass"] = 2
         output_args["f"] = args.output.split(".")[-1]
+
+        logger.debug(f"Command: {ffmpeg.input(args.input, **input_args).output(args.output, **output_args).compile()}")
         ffmpeg.input(args.input, **input_args).output(args.output, **output_args).run(overwrite_output=True, quiet=args.verbose)
         
 
